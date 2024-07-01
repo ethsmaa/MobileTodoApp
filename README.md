@@ -1,6 +1,10 @@
-# Welcome to your Expo app 👋
+# Welcome to ToDoApp for mobile ✨
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is a mobile application built with [Expo](https://expo.dev) that helps users manage their tasks efficiently.<p align="left">
+  <img src="https://github.com/ethsmaa/MobileTodoApp/assets/104065755/b71e1623-7002-4795-a340-bfb99a77c44d" alt="mobiletodoAppImg" width="200" />
+  <img src="https://github.com/ethsmaa/MobileTodoApp/assets/104065755/30122626-3fc9-4cfe-8463-ede735c6081a" alt="mobiletodoAppImg2" width="200" />
+</p>
+
 
 ## Get started
 
