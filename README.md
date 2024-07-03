@@ -1,54 +1,67 @@
 # Welcome to ToDoApp for mobile ✨
 
-This is a mobile application built with [Expo](https://expo.dev) that helps users manage their tasks efficiently.<p align="left">
-  <img src="https://github.com/ethsmaa/MobileTodoApp/assets/104065755/b71e1623-7002-4795-a340-bfb99a77c44d" alt="mobiletodoAppImg" width="200" />
-  <img src="https://github.com/ethsmaa/MobileTodoApp/assets/104065755/30122626-3fc9-4cfe-8463-ede735c6081a" alt="mobiletodoAppImg2" width="200" />
+This is a mobile application built with [Expo](https://expo.dev) that helps users manage their tasks efficiently.
+<p align="left">
+  <img src="https://github.com/ethsmaa/MobileTodoApp/assets/104065755/b1ac888e-04c9-45bd-a1b2-9866bf437b95" alt="mobiletodoAppImg2" width="200" />
+  <img src="https://github.com/ethsmaa/MobileTodoApp/assets/104065755/6895c93d-7a4c-40ce-97df-2e8b2c3c66de" alt="mobiletodoAppImg" width="200" />
+  <img src="https://github.com/ethsmaa/MobileTodoApp/assets/104065755/057018ed-1de8-4ce5-8423-ef1c47edba74" alt="mobiletodoAppImg2" width="200" />
 </p>
+
+
+
+## Features
+- Add new tasks
+- Edit existing tasks
+- Mark tasks as completed
+- List completed tasks
 
 
 ## Get started
 
-1. Install dependencies
+1. Clone the Repository:
+   ```bash
+      git clone https://github.com/ethsmaa/MobileTodoApp.git
+      cd MobileTodoApp
+      ```
 
+#### For npm users:
+
+1. Install dependencies
    ```bash
    npm install
    ```
 
 2. Start the app
-
    ```bash
-    npx expo start
+   npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+#### For yarn users:
+1. Install dependencies
+   ```bash
+   yarn install
+   ```
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+2. Start the app
+   ```bash
+   yarn start
+   ```
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Usage
 
-## Get a fresh project
+- Add a Task: Use the text input at the top to add a new task. Press the "+" button to add the task to your list.
+- Edit a Task: Tap the edit icon next to a task to edit its title. Press enter or click outside the input field to save the changes.
+- Complete a Task: Tap the checkbox next to a task to mark it as completed. The task will move to the "Completed" section.
+- View Completed Tasks: Scroll down to see the list of completed tasks.
 
-When you're ready, run:
 
-```bash
-npm run reset-project
-```
+## Contributing
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+If you would like to contribute to this project, please follow these steps:
 
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+1. Fork the repository.
+2. Create a new branch `git checkout -b feature/YourFeature`
+3. Make your changes.
+4. Commit your changes `git commit -m 'Add some feature'`
+5. Push to the branch `git push origin feature/YourFeature`
+6. Create a new Pull Request.
