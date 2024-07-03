@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, KeyboardAvoidingView, Platform, TextInput, TouchableOpacity, Keyboard, FlatList, ListRenderItem, Alert } from 'react-native';
+import { View, Text, KeyboardAvoidingView, Platform, TextInput, TouchableOpacity, Keyboard, FlatList, ListRenderItem, Alert, Image } from 'react-native';
 import Task from './../components/task';
 
 const App = () => {
@@ -35,7 +35,7 @@ const App = () => {
       ]
     );
   };
-  
+
   const handleDeleteTask = (index: number, isCompleted: boolean) => {
     let items = isCompleted ? completedItems : taskItems;
     let setItems = isCompleted ? setCompletedItems : setTaskItems;
@@ -60,7 +60,7 @@ const App = () => {
 
   const editTask = (index: number, newTitle: string) => {
     let itemsCopy = [...taskItems];
-    itemsCopy[index] = newTitle;
+    itemsCopy.splice(index, 1);
     setTaskItems(itemsCopy);
     setEditingTaskIndex(null);
     setEditTitle("");
@@ -92,37 +92,26 @@ const App = () => {
       title={item}
       onCompleteTask={() => completeTask(index, true)}
       isCompleted={true}
-      onEditTask={() => {}}
+      onEditTask={() => { }}
       deleteTask={() => confirmDeleteTask(index, true)}
       isEditing={false}
       editTitle={item}
-      setEditTitle={() => {}}
-      startEditingTask={() => {}}
+      setEditTitle={() => { }}
+      startEditingTask={() => { }}
     />
   );
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      className="flex-1 bg-bridalWhite"
-    >
-      <View className="w-full flex flex-row items-center justify-center bg-white">
-        <View className="flex flex-row mt-4 items-center w-5/6 bg-mistGray rounded-full p-2">
-          <TextInput
-            placeholder="Add a new to-do"
-            className="flex-1 px-3 text-base text-slate-900"
-            value={task}
-            onChangeText={(text) => setTask(text)}
-            onSubmitEditing={handleAddTask}
-          />
-          <TouchableOpacity
-            onPress={handleAddTask}
-            disabled={task.trim().length === 0}
-            className={`w-10 h-10 rounded-full flex justify-center items-center ${task.trim().length === 0 ? 'bg-disabledButtonBg' : 'bg-buttonBg'}`}
-          >
-            <Text className={`text-3xl font-normal ${task.trim().length === 0 ? 'text-bridalWhite' : 'text-buttonText'}`}>+</Text>
-          </TouchableOpacity>
-        </View>
+    
+    <View className="flex-1 bg-slate-200">
+      <View className="flex flex-row py-2 px-3 bg-slate-400 rounded-l border-slate-950 border-b-2">
+        <Image
+          source={require('./../../assets/icons/to-do-list.png')}
+          style={{ width: 50, height: 50 }}
+        />
+        <Text className="text-4xl py-3 px-5 font-bold text-slate-950">
+          ToDo<Text className="text-iconColorYellow">'</Text>s
+        </Text>
       </View>
 
       <View className="border-b border-mistGray mt-3" />
@@ -148,7 +137,7 @@ const App = () => {
         className="p-4"
         ListHeaderComponent={<Text className="text-lg font-bold mb-2 text-titleColor">Completed</Text>}
       />
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
