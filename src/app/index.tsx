@@ -1,19 +1,47 @@
 import React from 'react';
-import { View, Text, KeyboardAvoidingView, Platform, TextInput, TouchableOpacity, Keyboard, ScrollView } from 'react-native';
-import Task from './../components/task'; 
+import { View, Text, KeyboardAvoidingView, Platform, TextInput, TouchableOpacity, Keyboard, FlatList, ListRenderItem, Alert } from 'react-native';
+import Task from './../components/task';
 
 const App = () => {
   const [task, setTask] = React.useState<string>("");
   const [taskItems, setTaskItems] = React.useState<string[]>([]);
   const [completedItems, setCompletedItems] = React.useState<string[]>([]);
+  const [editingTaskIndex, setEditingTaskIndex] = React.useState<number | null>(null);
+  const [editTitle, setEditTitle] = React.useState<string>("");
 
   const handleAddTask = () => {
     if (task.trim().length === 0) {
-      return; // Boş görev eklemeyi önler
+      return;
     }
     Keyboard.dismiss();
     setTaskItems([task, ...taskItems]);
     setTask('');
+  };
+
+  const confirmDeleteTask = (index: number, isCompleted: boolean) => {
+    Alert.alert(
+      "Delete Task",
+      "Are you sure you want to delete this task?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "Delete",
+          onPress: () => handleDeleteTask(index, isCompleted),
+          style: "destructive",
+        },
+      ]
+    );
+  };
+  
+  const handleDeleteTask = (index: number, isCompleted: boolean) => {
+    let items = isCompleted ? completedItems : taskItems;
+    let setItems = isCompleted ? setCompletedItems : setTaskItems;
+    let copy = [...items];
+    copy.splice(index, 1);
+    setItems(copy);
   };
 
   const completeTask = (index: number, isCompleted: boolean) => {
@@ -34,7 +62,44 @@ const App = () => {
     let itemsCopy = [...taskItems];
     itemsCopy[index] = newTitle;
     setTaskItems(itemsCopy);
+    setEditingTaskIndex(null);
+    setEditTitle("");
   };
+
+  const startEditingTask = (index: number) => {
+    setEditingTaskIndex(index);
+    setEditTitle(taskItems[index]);
+  };
+
+  const renderTask: ListRenderItem<string> = ({ item, index }) => (
+    <Task
+      key={index}
+      title={item}
+      onCompleteTask={() => completeTask(index, false)}
+      isCompleted={false}
+      onEditTask={(newTitle) => editTask(index, newTitle)}
+      deleteTask={() => confirmDeleteTask(index, false)}
+      isEditing={editingTaskIndex === index}
+      editTitle={editTitle}
+      setEditTitle={setEditTitle}
+      startEditingTask={() => startEditingTask(index)}
+    />
+  );
+
+  const renderCompletedTask: ListRenderItem<string> = ({ item, index }) => (
+    <Task
+      key={index}
+      title={item}
+      onCompleteTask={() => completeTask(index, true)}
+      isCompleted={true}
+      onEditTask={() => {}}
+      deleteTask={() => confirmDeleteTask(index, true)}
+      isEditing={false}
+      editTitle={item}
+      setEditTitle={() => {}}
+      startEditingTask={() => {}}
+    />
+  );
 
   return (
     <KeyboardAvoidingView
@@ -62,35 +127,27 @@ const App = () => {
 
       <View className="border-b border-mistGray mt-3" />
 
-      <ScrollView contentContainerStyle={{ paddingBottom: 100 }} className="p-4">
-        <Text className="text-lg font-bold mb-2 text-titleColor">To Do</Text>
-        {taskItems.length === 0 ? (
-          <Text className="text-center text-gray-500 mt-8">No tasks added yet</Text>
-        ) : (
-          taskItems.map((item, index) => (
-            <Task
-              key={index}
-              title={item}
-              onCompleteTask={() => completeTask(index, false)}
-              isCompleted={false}
-              onEditTask={(newTitle) => editTask(index, newTitle)}
-            />
-          ))
-        )}
-      </ScrollView>
+      {
+        // section list mi kullansam flatlist mi karar veremedim
+      }
+      <FlatList
+        data={taskItems}
+        renderItem={renderTask}
+        keyExtractor={(item, index) => index.toString()}
+        ListEmptyComponent={<Text className="text-center text-gray-500 mt-8">No tasks added yet</Text>}
+        contentContainerStyle={{ paddingBottom: 100 }}
+        className="p-4"
+        ListHeaderComponent={<Text className="text-lg font-bold mb-2 text-titleColor">To Do</Text>}
+      />
 
-      <ScrollView contentContainerStyle={{ paddingBottom: 100 }} className="p-4">
-        <Text className="text-lg font-bold mb-2 text-titleColor">Completed</Text>
-        {completedItems.map((item, index) => (
-          <Task
-            key={index}
-            title={item}
-            onCompleteTask={() => completeTask(index, true)}
-            isCompleted={true}
-            onEditTask={() => {}}
-          />
-        ))}
-      </ScrollView>
+      <FlatList
+        data={completedItems}
+        renderItem={renderCompletedTask}
+        keyExtractor={(item, index) => index.toString()}
+        contentContainerStyle={{ paddingBottom: 100 }}
+        className="p-4"
+        ListHeaderComponent={<Text className="text-lg font-bold mb-2 text-titleColor">Completed</Text>}
+      />
     </KeyboardAvoidingView>
   );
 };

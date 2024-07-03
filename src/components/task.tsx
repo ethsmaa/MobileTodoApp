@@ -1,65 +1,65 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Feather, MaterialIcons } from '@expo/vector-icons';
 
 type TaskProps = {
   title: string;
-  onCompleteTask: () => void; 
+  onCompleteTask: () => void;
   isCompleted: boolean;
-  onEditTask: (newTite: string) => void;
+  onEditTask: (newTitle: string) => void;
+  deleteTask: () => void;
+  isEditing: boolean;
+  editTitle: string;
+  setEditTitle: (title: string) => void;
+  startEditingTask: () => void;
 };
 
-const Task = (props: TaskProps) => {
-
-  const [isEditing, setIsEditing] = React.useState<boolean>(false);
-  const [editTitle, setEditTitle] = React.useState<string>(props.title);
-
-  const handleEditTask = () => {
-    setIsEditing(true);
-  };
-
+const Task: React.FC<TaskProps> = (props) => {
   const handleSaveTask = () => {
-    props.onEditTask(editTitle);
-    setIsEditing(false);
+    props.onEditTask(props.editTitle);
   };
-
 
   return (
-    // if iscolpeted is false show shadow
     <View style={[styles.taskContainer, !props.isCompleted && styles.shadow]}>
-      <View className="flex-1 flex-row  gap-3 items-center ">  
+      <View className="flex-1 flex-row gap-3 items-center">
         <TouchableOpacity onPress={props.onCompleteTask}>
-          <MaterialCommunityIcons 
-            name={props.isCompleted ? 'checkbox-marked-circle' : 'checkbox-blank-circle-outline'} 
-            size={27} 
-            color='#313158'
+          <MaterialCommunityIcons
+            name={props.isCompleted ? 'checkbox-marked-circle' : 'checkbox-blank-circle-outline'}
+            size={27}
+            color="#313158"
           />
         </TouchableOpacity>
-      {
-        isEditing?  (
+        {props.isEditing ? (
           <TextInput
-            value={editTitle}
-            onChangeText={setEditTitle}
+            value={props.editTitle}
+            onChangeText={props.setEditTitle}
             onBlur={handleSaveTask}
             autoFocus
-            className='flex-1 border-b border-gray-300 text-base'
-
+            className="flex-1 border-b border-gray-300 text-base"
           />
         ) : (
-          <Text className={`${props.isCompleted ? 'line-through text-completedText' : 'text-unCompletedText'} font-semibold`}>{props.title}</Text>
-
-        )
-      
-      }
-        </View>
-        {!isEditing &&!props.isCompleted && 
-          <TouchableOpacity onPress={handleEditTask}>
-            <Feather name="edit" size={24} color='#313158' />
+          <Text
+            className={`${
+              props.isCompleted ? 'line-through text-completedText' : 'text-unCompletedText'
+            } font-semibold`}
+          >
+            {props.title}
+          </Text>
+        )}
+      </View>
+      <View className="flex flex-row gap-2">
+        {!props.isEditing && !props.isCompleted && (
+          <TouchableOpacity onPress={props.startEditingTask}>
+            <Feather name="edit" size={24} color="#313158" />
           </TouchableOpacity>
+        )}
+        {
+          !props.isEditing && ( <TouchableOpacity onPress={props.deleteTask}>
+            <MaterialIcons name="delete" size={24} color="#313158" />
+          </TouchableOpacity>)
         }
-
-    
+       
+      </View>
     </View>
   );
 };
@@ -76,7 +76,6 @@ const styles = StyleSheet.create({
     padding: 15,
     justifyContent: 'space-between',
     flexDirection: 'row',
-    
   },
   shadow: {
     shadowColor: '#000',

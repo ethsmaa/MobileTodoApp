@@ -1,0 +1,9 @@
+{
+    "addTaskPlaceholder": "Add a new to-do",
+    "noTasks": "No tasks added yet",
+    "toDo": "To Do",
+    "completed": "Completed",
+    "deleteTaskConfirm": "Are you sure you want to delete this task?",
+    "cancel": "Cancel",
+    "delete": "Delete"
+}
