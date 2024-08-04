@@ -13,7 +13,10 @@ module.exports = {
         titleColor: '#898baa',
         completedText: '#c4c5ca',
         unCompletedText: '#7b7b89',
-        button : '#898baa'
+        button : '#898baa',
+        enterTask : '#EBF1F5',
+        primaryHeadline : '#474787',
+        secondaryHeadline : '#2B2B5B',
       },
     },
   },
